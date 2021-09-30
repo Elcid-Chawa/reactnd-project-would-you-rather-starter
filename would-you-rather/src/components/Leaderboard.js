@@ -8,8 +8,8 @@ class Leaderboard extends Component {
 
         return (
             <div className="board">                
-                <Menu />
-                    <h4>Leaderboard</h4>     
+                
+                <h4>Leaderboard</h4>     
                 
             </div>
         )

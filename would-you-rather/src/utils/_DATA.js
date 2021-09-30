@@ -126,9 +126,21 @@ export function _getUsers () {
   })
 }
 
+export function _getUser(uid) {
+  return new Promise((res, rej) => {
+    setTimeout(() => res(users[uid]), 1000)
+  })  
+}
+
 export function _getQuestions () {
   return new Promise((res, rej) => {
     setTimeout(() => res({...questions}), 1000)
+  })
+}
+
+export function _getQuestion (qid){
+  return new Promise((res, rej) => {
+    setTimeout(() => res(questions[qid],1000))
   })
 }
 

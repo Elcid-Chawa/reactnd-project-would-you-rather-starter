@@ -1,9 +1,20 @@
-import { LOGIN_USER } from "../actions/login";
+import { LOGIN_USER, LOGOUT } from "../actions/login";
 
-export default function login(state = null, action) {
+export default function login(state = {}, action) {
     switch (action.type){
         case LOGIN_USER:
-            return  action.authedUser
+            return  {
+                ...state,
+                isLoggedin: action.isLoggedin,
+                payload: action.payload
+            }
+
+        case LOGOUT:
+            return {
+                ...state,
+                isLoggedin: action.isLoggedin,
+                payload: action.payload
+            }
             
         default:
             return state

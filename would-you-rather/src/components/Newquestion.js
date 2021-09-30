@@ -8,7 +8,7 @@ class Newquestion extends Component {
 
         return (
             <div className="form">                
-                <Menu />
+                
                 <form method="post">
                     <h4>Would you rather? </h4>
                     <p className="choose-option">A: </p>

@@ -1,45 +1,50 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Link, Route, Redirect } from 'react-router-dom'
+import { Link, withRouter, Redirect } from 'react-router-dom'
 import { setAuthedUser } from "../actions/authUser";
+import { handleLogin } from "../actions/login";
 import Home from "./home";
 
 class Login extends Component {
 
     state = {
         authedUser: undefined,
-        isLoggedIn: false,
+        loggedIn: false
     }
 
     handleSelect = (e) => {
         
-        console.log(e.target.value)
         this.setState(() => ({
             authedUser: e.target.value,
         }))
+        
     }
 
-    handleLogin = (e) => {
+    handleAuth = (e) => {
         e.preventDefault();
         console.log(this.state.authedUser);
         this.props.dispatch(setAuthedUser(this.state.authedUser));
+        this.props.dispatch(handleLogin(this.state.authedUser));
+
         this.setState(() => ({
-            isLoggedIn: true
-        }));
+            loggedIn: true
+        }))
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        <Redirect to='/home' />;
-    }
+    
 
     render(){
-        const { authedUser, isLoggedIn } = this.state;
+        const { authedUser, loggedIn } = this.state;
+        const { user, isLoggedin } = this.props;
 
+        if(loggedIn){
+            return <Redirect to='/' />
+        }
+        
         return (
             <div>
                 <div className="login-box">
-                    <form  onSubmit={this.handleLogin}>
+                    <form  onSubmit={this.handleAuth}>
                         <label>Login</label>
                         <select defaultValue={authedUser} onChange={this.handleSelect}>
                             <option value="" >Select user...</option>
@@ -47,10 +52,10 @@ class Login extends Component {
                                 <option key={id} value={id}>{id}</option>
                             ))}
                         </select>
-                        <button type='submit' onClick={this.handleSubmit}>Login</button>
+                        <button type='submit'>Login</button>
+                        {isLoggedin && <p>Logged IN</p>}
                     </form>
                 </div>
-                { isLoggedIn && <Route path='/' render={()  => (<Home authedUser={authedUser} />)} />}
             </div>
             
         );
@@ -58,11 +63,16 @@ class Login extends Component {
     
 }
 
-function mapStateToProps({users, questions, authedUser}){
+function mapStateToProps({users, questions, authedUser, login}){
+
+    const user = authedUser
+
+    const isLogggedIn = login.isLoggedin ? login.isLoggedin : false;
     return {
         userIDs: Object.keys(users),
         questions,
-        authedUser
+        user,
+        isLogggedIn,
     }
 }
 

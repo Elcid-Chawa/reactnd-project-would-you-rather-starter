@@ -34,12 +34,10 @@ class App extends Component  {
     return (
         <Fragment>
           <div className="App">
-            {!login.isLoggedin && <button onClick={this.handelClick} id="testbutton"><Link to='/login'>Resume</Link></button>}
-            {login.isLoggedin && <button onClick={this.handelClick} id="testbutton"><Link to='/'>Discard</Link></button>}
           {login.isLoggedin &&  <Menu />}         
           
             <Switch>
-              <Route path='/' exact component={Home} />
+              <Route path='/home' exact component={Home} />
               <Route path='/login' component={Login} />
               <Route path="/new-question" component={Newquestion} />
               <Route path="/leaderboard" component={Leaderboard} />

@@ -40,7 +40,11 @@ class Home extends Component {
 
         const { showAnswered } = this.state;
 
-        const { authedUser, login } = this.props;
+        const { authedUser, questionsId } = this.props;
+
+        if (questionsId === {}){
+            return <Redirect to='/login' />
+        }
 
         return (
             <div className="question-container">
@@ -82,7 +86,7 @@ class Home extends Component {
 function mapStateToProps({questions, users, authedUser, login}) {
 
 
-    const answeredId =  login.payload.answers ;
+    const answeredId =  login.isLoggein ? login.payload.answers: {};
     const unanswered =  Object.keys(questions).filter(k => { return !Object.keys(answeredId).includes(k)});
 
     return {

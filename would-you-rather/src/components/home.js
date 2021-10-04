@@ -1,17 +1,22 @@
 import React, { Component } from "react";
-import { Link, Route, Switch, Redirect } from 'react-router-dom'
+import { Link, withRouter, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Login from './login'
-import QuestionsBank from "./QuestionsBank";
+import Answered from "./answered";
+import Question from "./questions";
 
 class Home extends Component {
+
+    constructor(props) {
+        super(props)
+        this.openPool = this.openPool.bind(this);
+    }
 
     state = {
         showAnswered: false,
     }
 
     openPool = (e, poll) => {
-
+        e.preventDefault();
         // Get all elements with class="tablinks" and remove the class "active"
         const tablinks = document.getElementsByClassName("tablinks");
         for (let i = 0; i < tablinks.length; i++) {
@@ -19,14 +24,12 @@ class Home extends Component {
         }
 
        if (poll === "answered") {
-        console.log(e)
            this.setState(() => ({
                showAnswered: true
            }))
        }
 
        if (poll === "unanswered") {
-           console.log(poll)
             this.setState(() => ({
                 showAnswered: false
             }))
@@ -59,7 +62,7 @@ class Home extends Component {
                     <ul>
                         {this.props.unanswered.map((id) => (
                             <li key={id}>
-                                    <Link to={`/questions/${id}`}><QuestionsBank id={id} isAnwered={false} /></Link>
+                                    <Link to={`/questions/${id}`}><Question id={id} /></Link>
                             </li>
                         ))}
                     </ul>
@@ -70,7 +73,7 @@ class Home extends Component {
                     <ul>
                         {this.props.questionsId.map((id) => (
                                 <li key={id}>
-                                    <Link to ={`/questions/${id}`} ><QuestionsBank id={id} isAnwered={true} /></Link>
+                                    <Link to ={`/answer/${id}`} ><Answered id={id} /></Link>
                                 </li>
                         ))}
                     </ul>
@@ -86,7 +89,7 @@ class Home extends Component {
 function mapStateToProps({questions, users, authedUser, login}) {
 
 
-    const answeredId =  users[authedUser].answers;
+    const answeredId =  (login !== null && login.isLoggedin) ? users[authedUser].answers : {};
     const unanswered =  Object.keys(questions).filter(k => { return !Object.keys(answeredId).includes(k)});
 
     return {
@@ -95,6 +98,7 @@ function mapStateToProps({questions, users, authedUser, login}) {
         unanswered: Object.values(unanswered)
         .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
         authedUser,
+        login
     }
 }
 

@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, withRouter, Route } from "react-router-dom";
-import Question from "./questions";
-import Answered from "./answered";
+import { withRouter } from "react-router-dom";
+
 
 class QuestionsBank extends Component {  
 
     render() {
-        const { question, users, isAnswered } = this.props
+        const { question, users, qid } = this.props
 
         if ( question === null ){
             return <p>No unanswered question exists!</p>
@@ -17,28 +16,29 @@ class QuestionsBank extends Component {
              id
         } =  question
 
-        console.log(isAnswered)
+        console.log(qid)
 
         return (
             <div>
-                {isAnswered && <p>Answered {id}</p>}
-                {!isAnswered && <p>Not Answered {id}</p>}
+                {qid}
             </div>
             
         )
     }
 }
 
-function mapStateToProps({authedUser, users, questions}, { id, isAnswered } ) {
-    const question = questions[id];
+function mapStateToProps({authedUser, users, questions}, { props } ) {
+    const { qid } = props.match.params;
+    console.log(qid)
+    const question = questions[qid];
 
     return {
         authedUser,
         question: question,
         users,
-        isAnswered
+        qid
 
     }
 }
 
-export default connect(mapStateToProps)(QuestionsBank);
+export default withRouter(connect(mapStateToProps))(QuestionsBank);

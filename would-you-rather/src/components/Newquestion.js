@@ -25,13 +25,14 @@ class Newquestion extends Component {
     }
 }
 
-function mapStateToProps({authedUser, users, questions}, { id } ) {
+function mapStateToProps({authedUser, users, questions, login}, { id } ) {
     const question = questions[id];
 
     return {
         authedUser,
         question: question,
         users,
+        login
 
     }
 }

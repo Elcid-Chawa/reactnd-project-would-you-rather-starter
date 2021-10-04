@@ -140,7 +140,7 @@ export function _getQuestions () {
 
 export function _getQuestion (qid){
   return new Promise((res, rej) => {
-    setTimeout(() => res(questions[qid],1000))
+    setTimeout(() => res(questions[qid], 1000))
   })
 }
 

@@ -22,9 +22,9 @@ class Login extends Component {
 
     handleAuth = (e) => {
         e.preventDefault();
-        console.log(this.state.authedUser);
-        this.props.dispatch(setAuthedUser(this.state.authedUser));
+
         this.props.dispatch(handleLogin(this.state.authedUser));
+        this.props.dispatch(setAuthedUser(this.state.authedUser));
 
         this.setState(() => ({
             loggedIn: true
@@ -42,8 +42,7 @@ class Login extends Component {
         }
         
         return (
-            <div>
-                <div className="login-box">
+                <div className="login-box" align="center">
                     <form  onSubmit={this.handleAuth}>
                         <label>Login</label>
                         <select defaultValue={authedUser} onChange={this.handleSelect}>
@@ -56,7 +55,6 @@ class Login extends Component {
                         {isLoggedin && <p>Logged IN</p>}
                     </form>
                 </div>
-            </div>
             
         );
     }
@@ -67,7 +65,7 @@ function mapStateToProps({users, questions, authedUser, login}){
 
     const user = authedUser
 
-    const isLogggedIn = login.isLoggedin ? login.isLoggedin : false;
+    const isLogggedIn = (login !== null )? login.isLoggedin : false;
     return {
         userIDs: Object.keys(users),
         questions,

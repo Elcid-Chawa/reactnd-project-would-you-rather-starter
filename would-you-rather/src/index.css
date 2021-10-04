@@ -13,6 +13,20 @@ code {
     monospace;
 }
 
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+.login-box {
+  padding-top: 10px;
+  border: 1px solid #dad7d7 ;
+  vertical-align: middle;
+  margin: auto;
+  width: 50%;
+  height: 100px;
+}
 
 .question-container {
   max-width: 1000px;
@@ -24,8 +38,15 @@ code {
   text-align: center;
 }
 
+.nav {
+  padding-top: 10px;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
 .nav ul {
   display: flex;
+  margin: 0 auto;
   flex-direction: row;
   justify-content: flex-start;
   text-decoration: none;

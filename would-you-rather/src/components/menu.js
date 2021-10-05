@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { NavLink, Redirect } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { unsetAuthedUser } from '../actions/authUser';
 import { handleLogout } from '../actions/login';
 
 class Menu extends Component {
 
-    state = {
-        loggedOut: false
-    }
 
     handleClick = (e) => {
         e.preventDefault();
@@ -16,13 +13,9 @@ class Menu extends Component {
         this.props.dispatch(unsetAuthedUser(this.props.authedUser));
         this.props.dispatch(handleLogout(this.props.authedUser));
 
-        this.setState(() => ({
-            loggedOut: true
-        }));
     }
 
     render(){
-        const { loggedOut } = this.state;
         const {user, authedUser} = this.props;
         const avatarURL = user !== undefined ? user.avatarURL : ''
 

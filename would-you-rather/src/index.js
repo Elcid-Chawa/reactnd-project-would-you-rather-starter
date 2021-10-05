@@ -7,18 +7,17 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import middleware from './middleware';
-import { BrowserRouter } from 'react-router-dom'
 
 const store = createStore(reducer, middleware)
 
+const localThings = localStorage.getItem('login');
+
+console.log(localThings);
+
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
       <Provider store={store}>
         <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+      </Provider>,
   document.getElementById('root')
 );
 

@@ -38,9 +38,7 @@ class Leaderboard extends Component {
 
     render() {
        
-        const { users, userIDs, topAnswers} = this.props;
-
-        console.log(topAnswers)
+        const { users, userIDs} = this.props;
 
         return (
             <div className="board">                

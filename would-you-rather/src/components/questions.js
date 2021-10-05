@@ -41,6 +41,7 @@ function mapStateToProps({authedUser, users, questions, login}, { id } ) {
     return {
         authedUser,
         question: question,
+        id,
         users,
         login
 

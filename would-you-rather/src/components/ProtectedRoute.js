@@ -1,14 +1,15 @@
-import React, { Component } from "react";
-import { Redirect, Route } from "react-router-dom";
+import React from "react";
+import { Route } from "react-router-dom";
+import Login from "./login";
 
 
-function ProtectedRoute({component : Component, ...restOfProps}) {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
-    console.log("this", isAuthenticated)
+
+function ProtectedRoute({component : Component, isAuthenticated, ...restOfProps}) {
+   
     return(
         <Route {...restOfProps}
         render = {(props) => 
-            isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+            (isAuthenticated ? <Component {...props} /> : <Login />)
         } 
         
         />

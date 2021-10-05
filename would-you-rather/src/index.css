@@ -23,9 +23,9 @@ table, th, td {
   padding-top: 10px;
   border: 1px solid #dad7d7 ;
   vertical-align: middle;
-  margin: auto;
+  margin: 50px auto auto auto  ;
   width: 50%;
-  height: 100px;
+  height: auto;
 }
 
 .question-container {

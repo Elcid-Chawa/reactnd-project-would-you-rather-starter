@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter, Switch, Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Answered from "./answered";
 import Question from "./questions";
@@ -43,7 +43,7 @@ class Home extends Component {
 
         const { showAnswered } = this.state;
 
-        const { authedUser, questionsId } = this.props;
+        const { authedUser } = this.props;
 
         if (authedUser === null || undefined){
             return <Redirect to='/login' />
@@ -62,7 +62,7 @@ class Home extends Component {
                     <ul>
                         {this.props.unanswered.map((id) => (
                             <li key={id}>
-                                    <Link to={`/questions/${id}`}><Question id={id} /></Link>
+                                    <Link to ={`/questions/${id}`} ><Question id={id} /></Link>
                             </li>
                         ))}
                     </ul>
@@ -86,10 +86,10 @@ class Home extends Component {
         
 }
 
-function mapStateToProps({questions, users, authedUser, login}) {
+function mapStateToProps({questions, users, authedUser}) {
 
 
-    const answeredId =  (login !== null && login.isLoggedin) ? users[authedUser].answers : {};
+    const answeredId =  authedUser !== (null || undefined) ? users[authedUser].answers : {};
     const unanswered =  Object.keys(questions).filter(k => { return !Object.keys(answeredId).includes(k)});
 
     return {
@@ -98,7 +98,7 @@ function mapStateToProps({questions, users, authedUser, login}) {
         unanswered: Object.values(unanswered)
         .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
         authedUser,
-        login
+       
     }
 }
 

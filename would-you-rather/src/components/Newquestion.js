@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Menu from './menu'
 
 class Newquestion extends Component {
     render() {

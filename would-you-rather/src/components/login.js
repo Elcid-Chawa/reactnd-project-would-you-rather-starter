@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Link, withRouter, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { setAuthedUser } from "../actions/authUser";
 import { handleLogin } from "../actions/login";
-import Home from "./home";
 
 class Login extends Component {
 
@@ -17,25 +16,26 @@ class Login extends Component {
         this.setState(() => ({
             authedUser: e.target.value,
         }))
+           
         
     }
 
     handleAuth = (e) => {
         e.preventDefault();
-
+        
         this.props.dispatch(handleLogin(this.state.authedUser));
-        this.props.dispatch(setAuthedUser(this.state.authedUser));
-
+        
         this.setState(() => ({
             loggedIn: true
         }))
+        this.props.dispatch(setAuthedUser(this.state.authedUser));    
     }
 
     
 
     render(){
         const { authedUser, loggedIn } = this.state;
-        const { user, isLoggedin } = this.props;
+        const { isLoggedin } = this.props;
 
         if(loggedIn){
             return <Redirect to='/' />
@@ -44,14 +44,14 @@ class Login extends Component {
         return (
                 <div className="login-box" align="center">
                     <form  onSubmit={this.handleAuth}>
-                        <label>Login</label>
-                        <select defaultValue={authedUser} onChange={this.handleSelect}>
+                        <p><label>Login</label></p>
+                        <p><select defaultValue={authedUser} onChange={this.handleSelect}>
                             <option value="" >Select user...</option>
                             {this.props.userIDs.map((id) => (
                                 <option key={id} value={id}>{id}</option>
                             ))}
-                        </select>
-                        <button type='submit'>Login</button>
+                        </select></p>
+                        <p><button type='submit'>Login</button></p>
                         {isLoggedin && <p>Logged IN</p>}
                     </form>
                 </div>
@@ -65,7 +65,7 @@ function mapStateToProps({users, questions, authedUser, login}){
 
     const user = authedUser
 
-    const isLogggedIn = (login !== null )? login.isLoggedin : false;
+    const isLogggedIn = (login !== null ) ? login.isLoggedin : false;
     return {
         userIDs: Object.keys(users),
         questions,

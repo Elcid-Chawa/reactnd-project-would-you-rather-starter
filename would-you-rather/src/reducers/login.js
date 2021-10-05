@@ -1,6 +1,6 @@
 import { LOGIN_USER, LOGOUT } from "../actions/login";
 
-export default function login(state = null, action) {
+export default function login(state = {}, action) {
     switch (action.type){
         case LOGIN_USER:
             return  {

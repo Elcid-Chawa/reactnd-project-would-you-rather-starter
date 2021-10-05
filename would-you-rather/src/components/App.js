@@ -1,17 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared';
-import logo from '../logo.svg';
 import '../App.css';
+import { BrowserRouter } from 'react-router-dom'
 import Login from './login';
 import Menu from './menu';
 import Home from './home';
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route, withRouter } from 'react-router';
 import Newquestion from './Newquestion';
 import Leaderboard from './Leaderboard';
 import QuestionsBank from './QuestionsBank';
-import Answered from './answered';
-import { Link } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
+import PageNotFound from './PageNotFound';
 
 class App extends Component  {
 
@@ -19,31 +19,38 @@ class App extends Component  {
     this.props.dispatch(handleInitialData())
   }
 
-
   render (){
 
-    const {  users, login, authedUser } = this.props
+    const {  login } = this.props
+
+    const isAuthenticated = login !== null ? login.isLoggedin : false
+
+    console.log(isAuthenticated)
 
     return (
+      <BrowserRouter>
         <Fragment>
           <div className="App">
-            { login !== null ?  login.isLoggedin &&  <Menu />
-              : <div></div>
+            { !isAuthenticated ?  <Login /> 
+              : <div>
+                <Menu />
+                <Switch>
+                  <ProtectedRoute exact path='/' component={Home} isAuthenticated={isAuthenticated} />
+                  <Route path='/login' component={withRouter(Login)} />
+                  <ProtectedRoute path="/new-question" component={Newquestion} isAuthenticated={isAuthenticated} />
+                  <ProtectedRoute path="/leaderboard" component={Leaderboard} isAuthenticated={isAuthenticated} />
+                  <ProtectedRoute path="/questions/:id" component={ QuestionsBank } isAuthenticated={isAuthenticated} />
+                  <ProtectedRoute path="/answer/:id" component={QuestionsBank} isAuthenticated={isAuthenticated} />
+                  <Route component={PageNotFound} />
+                </Switch>
+                </div>
             }
                    
           
-            <Switch>
-              <Route path='/' exact component={Home} />
-              <Route path='/login' component={Login} />
-              <Route path="/new-question" component={Newquestion} />
-              <Route path="/leaderboard" exact component={Leaderboard} />
-              <Route path="/questions:qid" exact render={ (props) => <QuestionsBank {...props} /> } />
-              
-              <Route exact path="/answer:qid" component={Answered} />
-            </Switch>
+            
         </div>
       </Fragment>
-        
+      </BrowserRouter>  
     );
   }
     

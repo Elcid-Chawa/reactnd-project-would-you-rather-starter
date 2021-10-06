@@ -43,7 +43,7 @@ class Home extends Component {
 
         const { showAnswered } = this.state;
 
-        const { authedUser } = this.props;
+        const { authedUser, unanswered, questionsId } = this.props;
 
         if (authedUser === null || undefined){
             return <Redirect to='/login' />
@@ -59,19 +59,20 @@ class Home extends Component {
                     
                 {!showAnswered && (<div className="question-wrap">
                     <h3 className="center">Unanswered Polls</h3>
-                    <ul>
-                        {this.props.unanswered.map((id) => (
+                    {unanswered === [] ? <p>All questions Answered</p>
+                    : <ul>
+                        {unanswered.map((id) => (
                             <li key={id}>
                                     <Link to ={`/questions/${id}`} ><Question id={id} /></Link>
                             </li>
                         ))}
-                    </ul>
+                    </ul>}
                 </div> )}
 
                 {showAnswered && (<div className="question-wrap">
                     <h3 className="question-wrap">Answered Polls</h3>
                     <ul>
-                        {this.props.questionsId.map((id) => (
+                        {questionsId.map((id) => (
                                 <li key={id}>
                                     <Link to ={`/answer/${id}`} ><Answered id={id} /></Link>
                                 </li>
@@ -91,6 +92,8 @@ function mapStateToProps({questions, users, authedUser}) {
 
     const answeredId =  authedUser !== (null || undefined) ? users[authedUser].answers : {};
     const unanswered =  Object.keys(questions).filter(k => { return !Object.keys(answeredId).includes(k)});
+
+    console.log(unanswered)
 
     return {
         questionsId: Object.keys(answeredId)

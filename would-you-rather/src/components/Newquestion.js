@@ -38,11 +38,10 @@ class Newquestion extends Component {
                 toHome: true 
             }))
 
-            const author  = this.props.authedUser;
-            const optionTextOne = this.state.formValues.optionOne;
-            const optionTextTwo = this.state.formValues.optionTwo;
-            console.log(optionTextOne)
-            this.props.dispatch(handleAddQuestions({ optionTextOne, optionTextTwo, author }));
+            const optionOneText = this.state.formValues.optionOne;
+            const optionTwoText = this.state.formValues.optionTwo;
+            
+            this.props.dispatch(handleAddQuestions(optionOneText, optionTwoText));
         }
 
     }

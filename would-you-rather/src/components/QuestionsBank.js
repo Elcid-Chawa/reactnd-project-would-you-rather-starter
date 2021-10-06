@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {handleVote} from "../actions/voting";
+import { handleVote } from "../actions/voting";
 
 class QuestionsBank extends Component {
 
@@ -43,7 +43,8 @@ class QuestionsBank extends Component {
         const isOptionTwoVoted = optionTwo.votes.includes(authedUser)
 
         return(
-            <div>{url === '/questions/:id' &&(<div className="unanswered-poll">                
+            <div>
+                {url === '/questions/:id' &&(<div className="unanswered-poll">                
                     <div className="chip">
                         <img src={avatarURL} alt="Person" width="96" height="96" />
                         {author}
@@ -76,6 +77,7 @@ class QuestionsBank extends Component {
                     </div>
                 
                 </div>)}
+                
                 {url === '/answer/:id' &&(<div className="answered-poll">
 
                     <div className="chip">

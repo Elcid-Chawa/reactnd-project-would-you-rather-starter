@@ -25,8 +25,6 @@ class App extends Component  {
 
     const isAuthenticated = login !== null ? login.isLoggedin : false
 
-    console.log(isAuthenticated)
-
     return (
       <BrowserRouter>
         <Fragment>

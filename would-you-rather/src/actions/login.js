@@ -15,7 +15,7 @@ export function logout(authedUser) {
     return {
         type: LOGOUT,
         isLoggedin: false,
-        loggedOut: authedUser
+        payload: authedUser
     }
     
 }

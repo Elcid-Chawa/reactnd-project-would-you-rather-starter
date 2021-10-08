@@ -71,13 +71,14 @@ class Home extends Component {
 
                 {showAnswered && (<div className="question-wrap">
                     <h3 className="question-wrap">Answered Polls</h3>
-                    <ul>
+                    {(questionsId.length === 0) ? <p>No Questions Answered yet.</p>
+                    : <ul>
                         {questionsId.map((id) => (
                                 <li key={id}>
                                     <Link to ={`/answer/${id}`} ><Answered id={id} /></Link>
                                 </li>
                         ))}
-                    </ul>
+                    </ul>}
                 </div>)}
                     
             </div>

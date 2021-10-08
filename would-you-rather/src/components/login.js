@@ -43,9 +43,11 @@ class Login extends Component {
         
         return (
                 <div className="login-box" align="center">
+                    <h3> Welcome to Would You Rather App</h3>
+                    <h5>Please select a User below to Login</h5>
                     <form  onSubmit={this.handleAuth}>
                         <p><label>Login</label></p>
-                        <p><select defaultValue={authedUser} onChange={this.handleSelect}>
+                        <p><select defaultValue={authedUser} onChange={this.handleSelect} required>
                             <option value="" >Select user...</option>
                             {this.props.userIDs.map((id) => (
                                 <option key={id} value={id}>{id}</option>

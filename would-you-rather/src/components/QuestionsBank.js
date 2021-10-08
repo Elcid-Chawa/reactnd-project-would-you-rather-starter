@@ -70,6 +70,7 @@ class QuestionsBank extends Component {
                                     name='vote' 
                                     value='optionOne'
                                     onChange={(e) => this.castVote(e, id)}
+                                    required
                                 />
                                 <label className="choose-option" > A: {optionOne.text}</label>
                             </div>
@@ -79,6 +80,7 @@ class QuestionsBank extends Component {
                                     name='vote'
                                     value='optionTwo'
                                     onChange={(e) => this.castVote(e, id)}
+                                    required
                                 />
                                 <label className="choose-option" > B: {optionTwo.text}</label>
                             </div>

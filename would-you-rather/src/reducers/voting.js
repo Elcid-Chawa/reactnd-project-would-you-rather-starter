@@ -6,7 +6,7 @@ export default function votes (state = {}, action){
             return {
                 ...state,
                 answer: action.answer,
-                isVotted: true
+                hasVotted: action.hasVotted
             }
 
         default :

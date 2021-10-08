@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { handleVote } from "../actions/users";
+import { updateVote } from "../actions/voting";
 
 class QuestionsBank extends Component {
 
@@ -29,6 +30,7 @@ class QuestionsBank extends Component {
         
         const {qid, answer} = this.state;
         this.props.dispatch(handleVote(qid, answer));
+        this.props.dispatch(updateVote(qid, answer));
     }
     
     render(){
@@ -98,13 +100,13 @@ class QuestionsBank extends Component {
                     <div className={isOptionOneVoted ? "option-one voted" : "option-one"}>
                         <h4>A: {optionOne.text}</h4>
                         <p>{optionOne.votes.length} out of {totalVotes}</p>
-                        <p>%{optionOne.votes.length/totalVotes * 100 } voted</p>
+                        <p>{(optionOne.votes.length/totalVotes * 100).toFixed(2)}% voted</p>
                     </div>
 
                     <div className={isOptionTwoVoted ? "option-two voted" : "option-two "}>
                         <h4>B: {optionTwo.text}</h4>
                         <p>{optionTwo.votes.length} out of {totalVotes}</p>
-                        <p>%{optionTwo.votes.length/totalVotes * 100 } voted</p>
+                        <p>{(optionTwo.votes.length/totalVotes * 100).toFixed(2)}% voted</p>
                     </div>
 
                     <Link to='/'><button>Return</button></Link>

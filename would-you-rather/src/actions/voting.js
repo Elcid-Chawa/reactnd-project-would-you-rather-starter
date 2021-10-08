@@ -12,7 +12,7 @@ export function castVote(answer, hasVotted) {
     }    
 }
 
-export function handleVote(qid, answer){
+export function updateVote(qid, answer){
     return (dispatch, getState) => {
         dispatch(showLoading())
         const { authedUser, votes } = getState();
@@ -20,10 +20,9 @@ export function handleVote(qid, answer){
             authedUser,
             qid,
             answer
-        }).then(() => {
+        }).then(() =>{ 
                 dispatch(castVote({authedUser, qid, answer}, votes.hasVotted))
-            .then(() => dispatch(handleUpdateVote(qid, answer)))
-            .then(() => dispatch(hideLoading()))
-            });
+                dispatch(handleUpdateVote(qid, answer));
+            }).then(() => dispatch(hideLoading()));
     }
 }

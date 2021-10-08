@@ -1,8 +1,9 @@
-import { saveQuestion } from "../utils/api";
+import { getQuestion, saveQuestion } from "../utils/api";
 import { showLoading, hideLoading } from 'react-redux-loading';
 
 export const RECEIVE_POLLS = 'RECEIVE_POLLS';
 export const ADD_POLLS = 'ADD_POLLS';
+export const UPDATE_VOTE = 'UPDATE_VOTE';
 
 export function receiveQuestions (questions) {
     return {
@@ -18,6 +19,16 @@ export function addQuestion (question) {
     }
 }
 
+export function updateVote(question, authedUser, answer) {
+    return {
+        type: UPDATE_VOTE,
+        question,
+        authedUser,
+        answer
+    }
+
+}
+
 export function handleAddQuestions (optionOneText, optionTwoText) {
     return (dispatch, getState) => {
         const { authedUser } = getState();
@@ -31,5 +42,14 @@ export function handleAddQuestions (optionOneText, optionTwoText) {
             })
             .then((question) => dispatch(addQuestion(question)))
             .then(() => dispatch(hideLoading()));
+    }
+}
+
+export function handleUpdateVote(qid, answer){
+    return (dispatch, getState) => {
+        const { authedUser } = getState();
+            return getQuestion(qid)
+                    .then((question) => dispatch(updateVote(question, authedUser, answer)))
+
     }
 }

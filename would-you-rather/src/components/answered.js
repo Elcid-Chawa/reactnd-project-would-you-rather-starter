@@ -38,13 +38,13 @@ class Answered extends Component {
                 <div className={isOptionOneVoted ? "option-one voted" : "option-one"}>
                     <h4>A: {optionOne.text}</h4>
                     <p>{optionOne.votes.length} out of {totalVotes}</p>
-                    <p>%{optionOne.votes.length/totalVotes * 100 } voted</p>
+                    <p>{(optionOne.votes.length/totalVotes * 100 ).toFixed(2)}% voted</p>
                 </div>
                 
                 <div className={isOptionTwoVoted ? "option-two voted" : "option-two "}>
                     <h4>B: {optionTwo.text}</h4>
                     <p>{optionTwo.votes.length} out of {totalVotes}</p>
-                    <p>%{optionTwo.votes.length/totalVotes * 100 } voted</p>
+                    <p>{(optionTwo.votes.length/totalVotes * 100).toFixed(2) }% voted</p>
                 </div>
 
             </div>

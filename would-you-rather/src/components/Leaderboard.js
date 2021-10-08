@@ -56,7 +56,7 @@ class Leaderboard extends Component {
                     <tbody>
                     {userIDs.map((id) => (  
                                             <tr key={id} className="item"> 
-                                                <td>{id}</td>
+                                                <td>{users[id].name}</td>
                                                 <td> {Object.keys(users[id].answers).length}</td>
                                                 <td>{users[id].questions.length}</td>
                                             </tr>

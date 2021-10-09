@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 class Leaderboard extends Component {
 
@@ -48,12 +49,16 @@ function mapStateToProps({authedUser, users, login} ) {
 
     return {
         users,
-        userIDs,
         authedUser,
         sortedUsers,
         login
 
     }
+}
+
+Leaderboard.propTypes = {
+    users: PropTypes.object.isRequired,
+    sortedUsers: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps)(Leaderboard);

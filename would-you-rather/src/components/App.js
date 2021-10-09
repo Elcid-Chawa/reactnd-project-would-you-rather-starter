@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { handleInitialData } from '../actions/shared';
 import '../App.css';
 import { BrowserRouter, Switch, Route  } from 'react-router-dom'
-import Login from './login';
-import Menu from './menu';
-import Home from './home';
+import Login from './Login';
+import Menu from './Menu';
+import Home from './Home';
 import Newquestion from './Newquestion';
 import Leaderboard from './Leaderboard';
 import QuestionsBank from './QuestionsBank';
@@ -50,7 +51,6 @@ class App extends Component  {
     );
   }
     
-    
 }
 
 function mapStateToProps ({ users, questions, login, authedUser }) {
@@ -63,5 +63,10 @@ function mapStateToProps ({ users, questions, login, authedUser }) {
     
   }
 }
+
+App.propTypes = {
+  login: PropTypes.object
+}
+
 
 export default connect(mapStateToProps)(App);

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 class Question extends Component {  
 
@@ -46,6 +47,11 @@ function mapStateToProps({authedUser, users, questions, login}, { id } ) {
         login
 
     }
+}
+
+Question.propTypes = {
+    question: PropTypes.object.isRequired,
+    users: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps)(Question);

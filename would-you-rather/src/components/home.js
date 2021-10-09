@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Link, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
-import Answered from "./answered";
-import Question from "./questions";
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Answered from "./Answered";
+import Question from "./Questions";
 
 class Home extends Component {
 
@@ -102,6 +103,12 @@ function mapStateToProps({questions, users, authedUser}) {
         authedUser,
        
     }
+}
+
+Home.propTypes = {
+    authedUser: PropTypes.string.isRequired,
+    unanswered: PropTypes.array,
+    answeredId: PropTypes.array
 }
 
 export default connect(mapStateToProps)(Home)

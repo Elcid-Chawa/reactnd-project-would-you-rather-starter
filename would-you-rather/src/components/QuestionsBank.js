@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import PropTypes from 'prop-types';
 import { handleVote } from "../actions/users";
 import { updateVote } from "../actions/voting";
 import PageNotFound from "./PageNotFound";
@@ -130,6 +131,12 @@ function mapStateToProps({authedUser, questions, users}, { match } ) {
         authedUser,
         users,
     }
+}
+
+QuestionsBank.propTypes = {
+    question: PropTypes.object,
+    authedUser: PropTypes.string.isRequired,
+    users: PropTypes.object
 }
 
 export default connect(mapStateToProps)(QuestionsBank);

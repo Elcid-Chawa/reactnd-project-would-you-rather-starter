@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { unsetAuthedUser } from '../actions/authUser';
 import { handleLogout } from '../actions/login';
 
@@ -48,6 +49,11 @@ function mapStateToProps({authedUser, users, login}) {
 
     }
     
+}
+
+Menu.propTypes = {
+    authedUser: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps)(Menu);

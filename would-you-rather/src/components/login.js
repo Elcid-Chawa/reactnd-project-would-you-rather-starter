@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { setAuthedUser } from "../actions/authUser";
 import { handleLogin } from "../actions/login";
 
@@ -75,6 +76,12 @@ function mapStateToProps({users, questions, authedUser, login}){
         user,
         isLogggedIn,
     }
+}
+
+Login.propTypes = {
+    users: PropTypes.object.isRequired,
+    user: PropTypes.string,
+    isLoggedin: PropTypes.bool.isRequired
 }
 
 export default connect(mapStateToProps)(withRouter(Login));

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { handleVote } from "../actions/users";
 import { updateVote } from "../actions/voting";
+import PageNotFound from "./PageNotFound";
 
 class QuestionsBank extends Component {
 
@@ -39,8 +40,8 @@ class QuestionsBank extends Component {
     
         const { authedUser, question, users} = this.props
 
-        if ( question === null || undefined ){
-            return <div><p>No unanswered question exists!</p><Link to='/'><button>Go home</button></Link></div>
+        if ( (question === null) || (question === undefined) ){
+            return <PageNotFound />
         }
 
         if (hasVotted){return <Redirect to='/' />}

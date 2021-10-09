@@ -2,11 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared';
 import '../App.css';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Switch, Route  } from 'react-router-dom'
 import Login from './login';
 import Menu from './menu';
 import Home from './home';
-import { Switch, Route, withRouter } from 'react-router';
 import Newquestion from './Newquestion';
 import Leaderboard from './Leaderboard';
 import QuestionsBank from './QuestionsBank';
@@ -34,7 +33,7 @@ class App extends Component  {
                 <Menu />
                 <Switch>
                   <ProtectedRoute exact path='/' component={Home} isAuthenticated={isAuthenticated} />
-                  <Route path='/login' component={withRouter(Login)} />
+                  <Route path='/login' component={Login} />
                   <ProtectedRoute path="/add" component={Newquestion} isAuthenticated={isAuthenticated} />
                   <ProtectedRoute path="/leaderboard" component={Leaderboard} isAuthenticated={isAuthenticated} />
                   <ProtectedRoute path="/questions/:id" component={ QuestionsBank } isAuthenticated={isAuthenticated} />

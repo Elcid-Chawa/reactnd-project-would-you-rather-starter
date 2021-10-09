@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import { setAuthedUser } from "../actions/authUser";
 import { handleLogin } from "../actions/login";
 
@@ -36,9 +36,10 @@ class Login extends Component {
     render(){
         const { authedUser, loggedIn } = this.state;
         const { isLoggedin } = this.props;
+        console.log(this.props.history.location.pathname)
 
         if(loggedIn){
-            return <Redirect to='/' />
+            return <Redirect to={this.props.history.location.pathname} />
         }
         
         return (
@@ -76,4 +77,4 @@ function mapStateToProps({users, questions, authedUser, login}){
     }
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(withRouter(Login));

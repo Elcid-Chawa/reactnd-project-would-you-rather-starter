@@ -1,3 +1,5 @@
+import { getUser } from "../utils/api";
+
 export const RECEIVE_USERS = 'RECEIVE_USERS'
 export const ADD_USER_VOTE = 'ADD_USER_VOTE'
 

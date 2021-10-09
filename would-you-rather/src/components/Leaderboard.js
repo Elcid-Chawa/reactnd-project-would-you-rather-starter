@@ -21,8 +21,8 @@ class Leaderboard extends Component {
 
             for(i=1; i< (tr.length -1); i++){
                 shouldSwithch = false;
-                j = tr[i].getElementByTagName("TD")[1];
-                k = tr[i+1].getElementByTagName("td")[1];
+                j = tr[i].getElementByTagName("TD")[3];
+                k = tr[i+1].getElementByTagName("td")[3];
 
                 if(Number(j.innerHTML) > Number(k.innerHTML)){
                     shouldSwithch= true;
@@ -38,7 +38,7 @@ class Leaderboard extends Component {
 
     render() {
        
-        const { users, userIDs} = this.props;
+        const { users, userIDs, topAnswers, topQuestions} = this.props;       
 
         return (
             <div className="board">                
@@ -49,16 +49,18 @@ class Leaderboard extends Component {
 
                     <tr>
                         <th>Names</th>
-                        <th onClick={this.sortTable}>No of Answered Questions</th>
+                        <th >No of Answered Questions</th>
                         <th>No of Published Questions</th>
+                        <th onClick={this.sortTable}>Total</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {userIDs.map((id) => (  
+                    {userIDs.map((id, index) => (  
                                             <tr key={id} className="item"> 
-                                                <td>{users[id].name}</td>
-                                                <td> {Object.keys(users[id].answers).length}</td>
-                                                <td>{users[id].questions.length}</td>
+                                                <td><img src={users[id].avatarURL} alt={id} width="50" height="50"  /> {users[id].name}</td>
+                                                <td> {topAnswers[index][id]}</td>
+                                                <td>{topQuestions[index][id]}</td>
+                                                <td>{topAnswers[index][id] + topQuestions[index][id]}</td>
                                             </tr>
                                 )
                     )}
@@ -74,14 +76,21 @@ class Leaderboard extends Component {
 function mapStateToProps({authedUser, users, login} ) {
 
     const userIDs = Object.keys(users);
+    
+    const topAnswers = userIDs.map((id) => ({ [id] : Object.keys(users[id].answers).length}) )
+    const topQuestions = userIDs.map((id) => ({ [id] : users[id].questions.length}) )
 
-    const topAnswers = userIDs.map((id) => ({ id : users[id].answers}) )
+    const sortedUsers = userIDs.sort( (a,b) => Object.keys(users[b].answers).length  - Object.keys(users[a].answers).length )
+
+    console.log(sortedUsers)
+
 
     return {
         users,
         userIDs,
-        topAnswers,
         authedUser,
+        topAnswers,
+        topQuestions,
         login
 
     }

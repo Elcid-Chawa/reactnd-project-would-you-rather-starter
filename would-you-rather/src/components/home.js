@@ -41,7 +41,7 @@ class Home extends Component {
 
     render (){
 
-        const { authedUser, unanswered, questionsId } = this.props;
+        const { authedUser, unanswered, answeredId } = this.props;
 
         const { showAnswered } = this.state;
 
@@ -71,11 +71,11 @@ class Home extends Component {
 
                 {showAnswered && (<div className="question-wrap">
                     <h3 className="question-wrap">Answered Polls</h3>
-                    {(questionsId.length === 0) ? <p>No Questions Answered yet.</p>
+                    {(answeredId.length === 0) ? <p>No Questions Answered yet.</p>
                     : <ul>
-                        {questionsId.map((id) => (
+                        {answeredId.map((id) => (
                                 <li key={id}>
-                                    <Link to ={`/answer/${id}`} ><Answered id={id} /></Link>
+                                    <Link to ={`/questions/${id}`} ><Answered id={id} /></Link>
                                 </li>
                         ))}
                     </ul>}
@@ -95,7 +95,7 @@ function mapStateToProps({questions, users, authedUser}) {
     const unanswered =  Object.keys(questions).filter(k => { return !Object.keys(answeredId).includes(k)});
 
     return {
-        questionsId: Object.keys(answeredId)
+        answeredId: Object.keys(answeredId)
         .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
         unanswered: Object.values(unanswered)
         .sort((a,b) => questions[b].timestamp - questions[a].timestamp),

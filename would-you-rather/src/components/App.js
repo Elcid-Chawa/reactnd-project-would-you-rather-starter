@@ -35,10 +35,9 @@ class App extends Component  {
                 <Switch>
                   <ProtectedRoute exact path='/' component={Home} isAuthenticated={isAuthenticated} />
                   <Route path='/login' component={withRouter(Login)} />
-                  <ProtectedRoute path="/new-question" component={Newquestion} isAuthenticated={isAuthenticated} />
+                  <ProtectedRoute path="/add" component={Newquestion} isAuthenticated={isAuthenticated} />
                   <ProtectedRoute path="/leaderboard" component={Leaderboard} isAuthenticated={isAuthenticated} />
                   <ProtectedRoute path="/questions/:id" component={ QuestionsBank } isAuthenticated={isAuthenticated} />
-                  <ProtectedRoute path="/answer/:id" component={QuestionsBank} isAuthenticated={isAuthenticated} />
                   <Route component={PageNotFound} />
                 </Switch>
                 </div>

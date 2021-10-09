@@ -27,9 +27,8 @@ class Menu extends Component {
                     <ul>
                         { authedUser !== ( null || undefined) && <li><span><img src={avatarURL} alt={authedUser} width="50" height="50"  /></span></li>}
                         <li><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="/new-question">Questions</NavLink></li>
+                        <li><NavLink to="/add">Questions</NavLink></li>
                         <li><NavLink to="/leaderboard"> Leaderboard</NavLink></li>
-                        { authedUser === ( null || undefined) && <li><span><img src={avatarURL} alt={authedUser} width="50" height="50"  /></span> Login</li>}
                         { authedUser !== ( null || undefined) && <li onClick={this.handleClick}><NavLink to='/login' > Logout</NavLink></li>}
                     </ul>
                 </div>

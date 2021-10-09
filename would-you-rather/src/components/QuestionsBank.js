@@ -37,7 +37,7 @@ class QuestionsBank extends Component {
 
         const { hasVotted } = this.state;
     
-        const { authedUser, question, users, url } = this.props
+        const { authedUser, question, users} = this.props
 
         if ( question === null || undefined ){
             return <div><p>No unanswered question exists!</p><Link to='/'><button>Go home</button></Link></div>
@@ -53,10 +53,11 @@ class QuestionsBank extends Component {
         const totalVotes = optionOne.votes.length + optionTwo.votes.length
         const isOptionOneVoted = optionOne.votes.includes(authedUser)
         const isOptionTwoVoted = optionTwo.votes.includes(authedUser)
+        const answeredQuestionsId = Object.keys(users[authedUser].answers)
 
         return(
             <div>
-                {url === '/questions/:id' &&(<div className="unanswered-poll">                
+                {!answeredQuestionsId.includes(id) && (<div className="unanswered-poll">                
                     <div className="chip">
                         <img src={avatarURL} alt="Person" width="96" height="96" />
                         {author}
@@ -92,7 +93,7 @@ class QuestionsBank extends Component {
                 
                 </div>)}
                 
-                {url === '/answer/:id' &&(<div className="answered-poll">
+                {answeredQuestionsId.includes(id) &&(<div className="answered-poll">
 
                     <div className="chip">
                         <img src={avatarURL} alt={authedUser} width="96" height="96" />
@@ -101,7 +102,7 @@ class QuestionsBank extends Component {
 
                     <div className={isOptionOneVoted ? "option-one voted" : "option-one"}>
                         <h4>A: {optionOne.text}</h4>
-                        <p>{optionOne.votes.length} out of {totalVotes}</p>
+                        <p>{optionOne.votes.length} out of {totalVotes} person(s) voted.</p>
                         <p>{(optionOne.votes.length/totalVotes * 100).toFixed(2)}% voted</p>
                     </div>
 
@@ -123,13 +124,10 @@ function mapStateToProps({authedUser, questions, users}, { match } ) {
 
     const question = questions[match.params.id];
 
-    const url = match.path
-
     return {
         question,
         authedUser,
         users,
-        url
     }
 }
 

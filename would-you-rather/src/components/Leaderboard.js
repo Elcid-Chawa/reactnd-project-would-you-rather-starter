@@ -5,7 +5,7 @@ class Leaderboard extends Component {
 
     render() {
        
-        const { users, userIDs, topAnswers, topQuestions} = this.props;       
+        const { users, sortedUsers} = this.props;       
 
         return (
             <div className="board">                
@@ -22,12 +22,12 @@ class Leaderboard extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {userIDs.map((id, index) => (  
+                    {sortedUsers.map((id) => (  
                                             <tr key={id} className="item"> 
                                                 <td><img src={users[id].avatarURL} alt={id} width="50" height="50"  /> {users[id].name}</td>
-                                                <td> {topAnswers[index][id]}</td>
-                                                <td>{topQuestions[index][id]}</td>
-                                                <td>{topAnswers[index][id] + topQuestions[index][id]}</td>
+                                                <td> {Object.keys(users[id].answers).length }</td>
+                                                <td>{users[id].questions.length}</td>
+                                                <td>{Object.keys(users[id].answers).length + users[id].questions.length}</td>
                                             </tr>
                                 )
                     )}
@@ -44,20 +44,13 @@ function mapStateToProps({authedUser, users, login} ) {
 
     const userIDs = Object.keys(users);
     
-    const topAnswers = userIDs.map((id) => ({ [id] : Object.keys(users[id].answers).length}) )
-    const topQuestions = userIDs.map((id) => ({ [id] : users[id].questions.length}) )
-
-    const sortedUsers = userIDs.sort( (a,b) => Object.keys(users[b].answers).length  - Object.keys(users[a].answers).length )
-
-    console.log(sortedUsers)
-
+    const sortedUsers = userIDs.sort( (a,b) => (Object.keys(users[b].answers).length + users[b].questions.length) - (Object.keys(users[a].answers).length + users[a].questions.length))
 
     return {
         users,
         userIDs,
         authedUser,
-        topAnswers,
-        topQuestions,
+        sortedUsers,
         login
 
     }

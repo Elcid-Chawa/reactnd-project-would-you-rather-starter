@@ -36,11 +36,16 @@ class Login extends Component {
 
     render(){
         const { authedUser, loggedIn } = this.state;
-        const { isLoggedin } = this.props;
-        console.log(this.props.history.location.pathname)
+        const { isLoggedin, history } = this.props;
+        console.log(history.location.pathname)
 
         if(loggedIn){
-            return <Redirect to={this.props.history.location.pathname} />
+            if (history.location.pathname === '/login')
+                { 
+                    return <Redirect to='/' /> 
+                }
+
+                return <Redirect to={this.props.history.location.pathname} /> 
         }
         
         return (
@@ -69,7 +74,7 @@ function mapStateToProps({users, questions, authedUser, login}){
 
     const user = authedUser
 
-    const isLogggedIn = (login !== null ) ? login.isLoggedin : false;
+    const isLogggedIn = ((login !== null) || (login !== undefined ) ) ? login.isLoggedin : false;
     return {
         userIDs: Object.keys(users),
         questions,
@@ -79,9 +84,9 @@ function mapStateToProps({users, questions, authedUser, login}){
 }
 
 Login.propTypes = {
-    users: PropTypes.object.isRequired,
+    userIDs: PropTypes.array.isRequired,
     user: PropTypes.string,
-    isLoggedin: PropTypes.bool.isRequired
+    isLogggedIn: PropTypes.bool
 }
 
 export default connect(mapStateToProps)(withRouter(Login));

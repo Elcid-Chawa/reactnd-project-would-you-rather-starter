@@ -37,7 +37,6 @@ class Login extends Component {
     render(){
         const { authedUser, loggedIn } = this.state;
         const { isLoggedin, history } = this.props;
-        console.log(history.location.pathname)
 
         if(loggedIn){
             if (history.location.pathname === '/login')

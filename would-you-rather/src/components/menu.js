@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { unsetAuthedUser } from '../actions/authUser';
 import { handleLogout } from '../actions/login';

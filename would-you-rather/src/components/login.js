@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { setAuthedUser } from "../actions/authUser";
 import { handleLogin } from "../actions/login";
 
@@ -35,10 +36,15 @@ class Login extends Component {
 
     render(){
         const { authedUser, loggedIn } = this.state;
-        const { isLoggedin } = this.props;
+        const { isLoggedin, history } = this.props;
 
         if(loggedIn){
-            return <Redirect to='/' />
+            if (history.location.pathname === '/login')
+                { 
+                    return <Redirect to='/' /> 
+                }
+
+                return <Redirect to={this.props.history.location.pathname} /> 
         }
         
         return (
@@ -67,7 +73,7 @@ function mapStateToProps({users, questions, authedUser, login}){
 
     const user = authedUser
 
-    const isLogggedIn = (login !== null ) ? login.isLoggedin : false;
+    const isLogggedIn = ((login !== null) || (login !== undefined ) ) ? login.isLoggedin : false;
     return {
         userIDs: Object.keys(users),
         questions,
@@ -76,4 +82,10 @@ function mapStateToProps({users, questions, authedUser, login}){
     }
 }
 
-export default connect(mapStateToProps)(Login);
+Login.propTypes = {
+    userIDs: PropTypes.array.isRequired,
+    user: PropTypes.string,
+    isLogggedIn: PropTypes.bool
+}
+
+export default connect(mapStateToProps)(withRouter(Login));

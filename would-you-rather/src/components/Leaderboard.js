@@ -1,44 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 class Leaderboard extends Component {
 
-    constructor(props){
-        super(props);
-        this.sortTable = this.sortTable.bind(this);
-    }
-
-    sortTable = (e) => {
-        e.preventDefault()
-
-        let table, tr, switching, i, j, k, shouldSwithch;
-        table = document.getElementById("mytable");
-        switching = true;
-
-        while(switching){
-            switching=false;
-            tr = table.rows;
-
-            for(i=1; i< (tr.length -1); i++){
-                shouldSwithch = false;
-                j = tr[i].getElementByTagName("TD")[3];
-                k = tr[i+1].getElementByTagName("td")[3];
-
-                if(Number(j.innerHTML) > Number(k.innerHTML)){
-                    shouldSwithch= true;
-                    break;
-                }
-            }
-            if(shouldSwithch){
-                tr[i].parentNode.insertBefore(tr[i+1], tr[i]);
-                switching = true;
-            }
-        }
-    }
-
     render() {
        
-        const { users, userIDs, topAnswers, topQuestions} = this.props;       
+        const { users, sortedUsers} = this.props;       
 
         return (
             <div className="board">                
@@ -51,16 +19,16 @@ class Leaderboard extends Component {
                         <th>Names</th>
                         <th >No of Answered Questions</th>
                         <th>No of Published Questions</th>
-                        <th onClick={this.sortTable}>Total</th>
+                        <th>Total</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {userIDs.map((id, index) => (  
+                    {sortedUsers.map((id) => (  
                                             <tr key={id} className="item"> 
                                                 <td><img src={users[id].avatarURL} alt={id} width="50" height="50"  /> {users[id].name}</td>
-                                                <td> {topAnswers[index][id]}</td>
-                                                <td>{topQuestions[index][id]}</td>
-                                                <td>{topAnswers[index][id] + topQuestions[index][id]}</td>
+                                                <td> {Object.keys(users[id].answers).length }</td>
+                                                <td>{users[id].questions.length}</td>
+                                                <td>{Object.keys(users[id].answers).length + users[id].questions.length}</td>
                                             </tr>
                                 )
                     )}
@@ -77,23 +45,20 @@ function mapStateToProps({authedUser, users, login} ) {
 
     const userIDs = Object.keys(users);
     
-    const topAnswers = userIDs.map((id) => ({ [id] : Object.keys(users[id].answers).length}) )
-    const topQuestions = userIDs.map((id) => ({ [id] : users[id].questions.length}) )
-
-    const sortedUsers = userIDs.sort( (a,b) => Object.keys(users[b].answers).length  - Object.keys(users[a].answers).length )
-
-    console.log(sortedUsers)
-
+    const sortedUsers = userIDs.sort( (a,b) => (Object.keys(users[b].answers).length + users[b].questions.length) - (Object.keys(users[a].answers).length + users[a].questions.length))
 
     return {
         users,
-        userIDs,
         authedUser,
-        topAnswers,
-        topQuestions,
+        sortedUsers,
         login
 
     }
+}
+
+Leaderboard.propTypes = {
+    users: PropTypes.object.isRequired,
+    sortedUsers: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps)(Leaderboard);

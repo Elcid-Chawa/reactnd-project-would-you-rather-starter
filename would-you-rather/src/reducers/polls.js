@@ -18,8 +18,7 @@ export default function questions ( state = {}, action){
             return {
                 ...state,
                 [action.question.id] : {
-                    ...action.question,
-                    votes : action.question[action.answer].votes.concat([action.authedUser])
+                    ...action.question
                 }
 
                 
